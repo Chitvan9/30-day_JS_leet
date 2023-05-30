@@ -1,0 +1,27 @@
+/**
+ * @param {Object} context
+ * @param {any[]} args
+ * @return {any}
+ */
+Function.prototype.callPolyfill = function(context, ...args) {
+  const uniqueProp = Symbol(); // Create a unique symbol as a property name on the obj
+  context[uniqueProp] = this; // Assign the function to the unique symbol property on the obj
+
+  const result = context[uniqueProp](...args); // Invoke the function with the provided arguments
+
+  delete context[uniqueProp]; // Remove the unique symbol property from the obj
+
+  return result; // Return the result of the function invocation
+}
+
+/**
+ * function increment() { this.count++; return this.count; }
+ * increment.callPolyfill({count: 1}); // 2
+ */
+
+
+
+/**
+ * function increment() { this.count++; return this.count; }
+ * increment.callPolyfill({count: 1}); // 2
+ */
